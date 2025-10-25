@@ -2,19 +2,19 @@
 import express from "express"
 const app=express();
 import path, { dirname } from "path";
-
 const __dirname=path.resolve();
+const PORT=process.env.PORT || 3000;
+
+
 
 
 import authRoutes from "./routes/auth.route.js"
 import messageRoute from "./routes/message.route.js";
 
-
 import dotenv from "dotenv"
+import { connectDB } from "./lib/db.js";
 dotenv.config();
-const PORT=process.env.PORT || 3000;
-
-
+app.use(express.json())
 
 
 app.use("/api/auth",authRoutes)
@@ -32,5 +32,6 @@ if(process.env.NODE_ENV==="production"){
 
 //run npmrun start
 app.listen(PORT,()=>{
-      console.log("Server is running on port : "+ PORT)
+      console.log("Server is running on port : "+ PORT);
+      connectDB();
 })
