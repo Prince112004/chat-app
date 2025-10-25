@@ -1,0 +1,64 @@
+import Usermodel from "../models/User.js";
+import bcrypt from "bcryptjs";
+import { generateToken } from "../lib/utils.js";
+
+
+
+
+
+export const signup = async (req, res) => {
+  const { fullName, email, password } = req.body;
+
+  try {
+    if (!fullName || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    const existingUser = await Usermodel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new Usermodel({
+      fullName,
+      email,
+      password: hashedPassword
+    });
+
+    await newUser.save();
+
+    // Generate JWT and set cookie
+    generateToken(newUser._id, res);
+
+    res.status(201).json({
+      _id: newUser._id,
+      fullName: newUser.fullName,
+      email: newUser.email,
+      profile: newUser.profilePic || null
+    });
+
+  } catch (error) {
+    console.error("Error in signup controller:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const login=async function(req,res){
+      res.send("Login endpoint");
+}
+
+export const logout=async function(req,res){
+      res.send("Logout endpoint");
+}
