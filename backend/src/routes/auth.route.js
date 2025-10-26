@@ -4,7 +4,7 @@ import {checkAuthenticated} from "../middleware/auth.middleware.js"
 import {arcjetProtection} from "../middleware/arcjet.middleware.js"
 const router=express.Router();
 
-router.use(arcjetProtection);
+// router.use(arcjetProtection);
 
 router.get("/test",(req,res)=>{
       return res.status(200).json({message:"Rate limit tested"})
