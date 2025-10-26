@@ -1,0 +1,17 @@
+# (optional) create project
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+
+# install Tailwind
+npm install tailwindcss @tailwindcss/vite
+
+# edit vite.config.js: add tailwindcss() plugin
+
+# in src/index.css (or similar):
+@import "tailwindcss";
+
+# in src/main.jsx /src/index.jsx: import './index.css';
+
+# run dev
+npm run dev
