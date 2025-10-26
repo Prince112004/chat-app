@@ -2,9 +2,10 @@
 import express from "express"
 const app=express();
 import path, { dirname } from "path";
-const __dirname=path.resolve();
 import { ENV } from "./lib/env.js";
+import cookieParser from "cookie-parser"
 
+const __dirname=path.resolve();
 const PORT= ENV.PORT || 3000;
 
 
@@ -16,7 +17,7 @@ import messageRoute from "./routes/message.route.js";
 
 import { connectDB } from "./lib/db.js";
 app.use(express.json())
-
+app.use(cookieParser());
 
 app.use("/api/auth",authRoutes)
 app.use("/api/message",messageRoute)
