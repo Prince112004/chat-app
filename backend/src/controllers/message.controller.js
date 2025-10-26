@@ -48,6 +48,10 @@ export const sendMessage = async (req, res) => {
       return res.status(400).json({ message: "Message cannot be empty" });
     }
 
+    if(senderId === receiverId){
+      return res.status(400).json({ message: "Cannot send message to yourself" });
+    }
+
     let imageUrl;
     if (image) {
       const uploadedImage = await cloudinary.uploader.upload(image);
