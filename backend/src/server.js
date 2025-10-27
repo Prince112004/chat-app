@@ -4,10 +4,11 @@ const app=express();
 import path, { dirname } from "path";
 import { ENV } from "./lib/env.js";
 import cookieParser from "cookie-parser"
+import cors from "cors";
 
 const __dirname=path.resolve();
 const PORT= ENV.PORT || 3000;
-
+app.use(cors({origin:ENV.CLIENT_URL,credentials:true}));
 
 
 import authRoutes from "./routes/auth.route.js"
