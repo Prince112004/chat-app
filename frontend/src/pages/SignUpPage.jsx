@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {useAuthStore} from "../store/useAuthStore"
 import { MessageCircleIcon, LockIcon, MailIcon, UserIcon, LoaderIcon } from "lucide-react";
 import { Link } from "react-router";
-import BorderAnimatedContainer from "../components/BorderAnimatedContainer"
+import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
+
 const SignUpPage = () => {
   const [formData,setFormData]=useState({
     fullName:"",
@@ -12,9 +13,9 @@ const SignUpPage = () => {
   const {signup,isSigningUp}=useAuthStore();
 
 
-    const handleSubmit=async (e)=>{
+    const handleSubmit= (e)=>{
       e.preventDefault();
-      await signup(formData);
+       signup(formData);
     };
   return (
      <div className="w-full flex items-center justify-center bg-slate-900 ">
@@ -85,9 +86,9 @@ const SignUpPage = () => {
                   </div>
 
                   {/* SUBMIT BUTTON */}
-                  <button className="auth-btn" type="submit" disabled={isSigningUp}>
+                  <button className="auth-btn cursor-pointer" type="submit" disabled={isSigningUp}>
                     {isSigningUp ? (
-                      <LoaderIcon className="w-full h-5 animate-spin text-center" />
+                      <LoaderIcon className=" w-full h-5 animate-spin text-center" />
                     ) : (
                       "Create Account"
                     )}
