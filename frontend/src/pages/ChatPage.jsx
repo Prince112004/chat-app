@@ -21,7 +21,8 @@ function ChatPage() {
           <ProfileHeader />
           <ActiveTabSwitch />
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-2">
+          {/* This is the main scrolling container for the lists */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-hide">
             {activeTab === "chats" ? <ChatsList /> : <ContactList />}
           </div>
         </div>
@@ -35,4 +36,3 @@ function ChatPage() {
   );
 }
 export default ChatPage;
-

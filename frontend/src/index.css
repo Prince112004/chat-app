@@ -34,3 +34,15 @@
   @apply px-4 py-2 inline-block bg-cyan-500/10 rounded-lg text-cyan-400
   hover:text-cyan-500 text-sm transition-colors;
 }
+
+/* Hides scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hides scrollbar for Firefox */
+.scrollbar-hide {
+    scrollbar-width: none;
+    /* Hides scrollbar for IE 10+ */
+    -ms-overflow-style: none;
+}
