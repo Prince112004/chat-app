@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useRef} from 'react'
 import { useChatStore } from '../store/useChatStore'
 import { useAuthStore } from '../store/useAuthStore';
 import ChatHeader from './ChatHeader';
@@ -10,17 +10,24 @@ const ChatContainer = () => {
 
   const {selectedUser,getMessagesByUserId,messages,isMessageLoading}=useChatStore();
   const {authUser}=useAuthStore();
+  const messageEndRef=useRef(null);
+
 
   useEffect(()=>{
     getMessagesByUserId(selectedUser._id);
   },[selectedUser,getMessagesByUserId]);
 
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
 
   return (
     <>
       <ChatHeader />    
-      <div className='flex-1 px-6 overflow-auto py-8'>
+      <div className='flex-1 px-6 overflow-auto py-8 custom-scrollbar'>
         {(messages.length > 0 && !isMessageLoading) ? (
          <div className=' max-w-3xl mx-auto space-y-6'>
           {messages.map(msg => (
@@ -52,6 +59,7 @@ const ChatContainer = () => {
                 </div>
               </div>
             ))}
+            <div ref={messageEndRef} />
          </div>
 
         ) : isMessageLoading ? <MessageLoadingSkeleton /> : (

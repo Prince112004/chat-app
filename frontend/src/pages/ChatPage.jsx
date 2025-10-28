@@ -22,7 +22,7 @@ function ChatPage() {
           <ActiveTabSwitch />
 
           {/* This is the main scrolling container for the lists */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-hide">
+          <div className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
             {activeTab === "chats" ? <ChatsList /> : <ContactList />}
           </div>
         </div>
