@@ -46,3 +46,31 @@
     /* Hides scrollbar for IE 10+ */
     -ms-overflow-style: none;
 }
+
+
+/* --- Modern Thin Scrollbar --- */
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Keep the track transparent */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #334155; /* slate-700 */
+  border-radius: 20px; /* Rounded corners */
+  border: 2px solid #0f172a; /* slate-900 (Creates padding) */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #475569; /* slate-600 */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent; /* thumb-color track-color */
+}
