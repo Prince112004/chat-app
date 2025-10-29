@@ -1,10 +1,11 @@
 // const express=require('express');
 import express from "express"
-const app=express();
+
 import path, { dirname } from "path";
 import { ENV } from "./lib/env.js";
 import cookieParser from "cookie-parser"
 import cors from "cors";
+import { app, server } from "./lib/socket.js";
 
 const __dirname=path.resolve();
 const PORT= ENV.PORT || 3000;
@@ -34,7 +35,7 @@ if(ENV.NODE_ENV==="production"){
 
 
 //run npmrun start
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
       console.log("Server is running on port : "+ PORT);
       connectDB();
 })
