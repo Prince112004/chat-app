@@ -1,24 +1,35 @@
-import React, { useEffect ,useRef} from 'react'
-import { useChatStore } from '../store/useChatStore'
-import { useAuthStore } from '../store/useAuthStore';
-import ChatHeader from './ChatHeader';
-import NoChatHistoryPlaceHolder from './NoChatHistoryPlaceHolder';
-import MessageInput from './MessageInput';
-import MessageLoadingSkeleton from './MessageLoadingSkeleton';
+import React, { useEffect, useRef } from "react";
+import { useChatStore } from "../store/useChatStore";
+import { useAuthStore } from "../store/useAuthStore";
+import ChatHeader from "./ChatHeader";
+import NoChatHistoryPlaceHolder from "./NoChatHistoryPlaceHolder";
+import MessageInput from "./MessageInput";
+import MessageLoadingSkeleton from "./MessageLoadingSkeleton";
 
 const ChatContainer = () => {
+  const {
+    selectedUser,
+    getMessagesByUserId,
+    messages,
+    isMessageLoading,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+    theme, // 1. Get the theme
+  } = useChatStore();
+  const { authUser } = useAuthStore();
+  const messageEndRef = useRef(null);
 
-  const {selectedUser,getMessagesByUserId,messages,isMessageLoading,subscribeToMessages,unsubscribeFromMessages}=useChatStore();
-  const {authUser}=useAuthStore();
-  const messageEndRef=useRef(null);
-
-
-  useEffect(()=>{
+  useEffect(() => {
     getMessagesByUserId(selectedUser._id);
     subscribeToMessages();
 
-    return ()=>unsubscribeFromMessages()
-  },[selectedUser,getMessagesByUserId,subscribeToMessages,unsubscribeFromMessages]);
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser,
+    getMessagesByUserId,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   useEffect(() => {
     if (messageEndRef.current) {
@@ -26,23 +37,27 @@ const ChatContainer = () => {
     }
   }, [messages]);
 
- 
   return (
     <>
-      <ChatHeader />    
-      <div className='flex-1 px-6 overflow-auto py-8 custom-scrollbar'>
-        {(messages.length > 0 && !isMessageLoading) ? (
-         <div className=' max-w-3xl mx-auto space-y-6'>
-          {messages.map(msg => (
+      <ChatHeader />
+      <div className="flex-1 px-6 overflow-auto py-8 custom-scrollbar">
+        {messages.length > 0 && !isMessageLoading ? (
+          <div className=" max-w-3xl mx-auto space-y-6">
+            {messages.map((msg) => (
               <div
                 key={msg._id}
-                className={`chat ${msg.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+                className={`chat ${
+                  msg.senderId === authUser._id ? "chat-end" : "chat-start"
+                }`}
               >
                 <div
                   className={`chat-bubble relative ${
+                    // --- 2. Theme Logic Added ---
                     msg.senderId === authUser._id
-                      ? "bg-cyan-600 text-white"
-                      : "bg-slate-800 text-slate-200"
+                      ? "bg-cyan-600 text-white" // Sender's bubble (same for both themes)
+                      : theme === "dark"
+                      ? "bg-slate-800 text-slate-200" // Receiver's bubble (Dark)
+                      : "bg-gray-200 text-gray-800" // Receiver's bubble (Light)
                   }`}
                 >
                   {msg.image && (
@@ -63,15 +78,16 @@ const ChatContainer = () => {
               </div>
             ))}
             <div ref={messageEndRef} />
-         </div>
-
-        ) : isMessageLoading ? <MessageLoadingSkeleton /> : (
+          </div>
+        ) : isMessageLoading ? (
+          <MessageLoadingSkeleton />
+        ) : (
           <NoChatHistoryPlaceHolder name={selectedUser.fullName} />
         )}
       </div>
       <MessageInput />
     </>
-  )
-}
+  );
+};
 
-export default ChatContainer
+export default ChatContainer;

@@ -5,9 +5,9 @@ import NoChatsFound from "./NoChatsFound";
 import { useAuthStore } from "../store/useAuthStore";
 
 const ChatsList = () => {
-  const { getMyChatPartner, chats, isUserLoading, setSelectedUser } =
+  const { getMyChatPartner, chats, isUserLoading, setSelectedUser, theme } =
     useChatStore();
-  const {onlineUsers}=useAuthStore();
+  const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
     getMyChatPartner();
@@ -21,12 +21,20 @@ const ChatsList = () => {
       {chats.map((chat) => (
         <div
           key={chat._id}
-          className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors custom-scrollbar"
+          className={`p-4 rounded-lg cursor-pointer transition-colors custom-scrollbar ${
+            // --- Theme Logic Added ---
+            theme === "dark"
+              ? "bg-cyan-500/10 hover:bg-cyan-500/20"
+              : "bg-gray-200 hover:bg-gray-300" // Light mode background
+          }`}
           onClick={() => setSelectedUser(chat)}
         >
           <div className="flex items-center gap-3">
-
-            <div className={`avatar ${onlineUsers.includes(chat._id)? "avatar-online":"avatar-offline"}`}>
+            <div
+              className={`avatar ${
+                onlineUsers.includes(chat._id) ? "avatar-online" : "avatar-offline"
+              }`}
+            >
               <div className="size-12 rounded-full">
                 <img
                   src={chat.profilePic || "/avatar.png"}
@@ -34,7 +42,12 @@ const ChatsList = () => {
                 />
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium truncate">
+            <h4
+              className={`font-medium truncate ${
+                // --- Theme Logic Added ---
+                theme === "dark" ? "text-slate-200" : "text-gray-800" // Light mode text
+              }`}
+            >
               {chat.fullName}
             </h4>
           </div>

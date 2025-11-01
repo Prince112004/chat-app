@@ -74,3 +74,14 @@
   scrollbar-width: thin;
   scrollbar-color: #334155 transparent; /* thumb-color track-color */
 }
+
+.dark_theme{
+  background-color: #1d293d;
+  color: white;
+
+}
+
+.light_theme{
+ background-color: whitesmoke;
+ color: black;
+}
