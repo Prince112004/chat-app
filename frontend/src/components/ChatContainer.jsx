@@ -40,7 +40,7 @@ const ChatContainer = () => {
   return (
     <>
       <ChatHeader />
-      <div className="flex-1 px-6 overflow-auto py-8 custom-scrollbar">
+      <div className="flex-1 px-6 overflow-auto  py-4 custom-scrollbar">
         {messages.length > 0 && !isMessageLoading ? (
           <div className=" max-w-3xl mx-auto space-y-6">
             {messages.map((msg) => (

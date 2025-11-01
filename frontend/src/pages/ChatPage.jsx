@@ -14,7 +14,7 @@ function ChatPage() {
   const { activeTab, selectedUser, theme } = useChatStore();
 
   return (
-    <div className="relative w-full max-w-6xl h-[880px] sm:h-[600px] ">
+    <div className="relative w-full max-w-6xl h-[90vh] sm:h-[600px] ">
       <BorderAnimatedContainer>
         {/* For desktop view */}
         <div className="hidden sm:flex size-full">

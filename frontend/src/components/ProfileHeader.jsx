@@ -120,7 +120,7 @@ function ProfileHeader() {
             </button>
         </div>
 
-        <div className={`menuDiv absolute z-20 top-0 left-0 ${theme==="dark"? " bg-slate-900 text-slate-400  border-slate-500": "bg-gray-200 text-black border-black"} w-full h-[60%] p-5 rounded-t-lg transition-all duration-500 shadow-2xl
+        <div className={`menuDiv absolute z-20 top-0 left-0 ${theme==="dark"? " bg-slate-900 text-slate-400  border-slate-500": "bg-gray-100 text-black border-black"} w-full h-[80%] p-5 rounded-t-lg transition-all duration-500 shadow-2xl
           ${ismenuopen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-5 invisible"}`}>
             <button  className="w-full h-fit flex justify-end">
               <XIcon onClick={()=>setIsmenuOpen((prev)=> !prev)} className="size-6" />
